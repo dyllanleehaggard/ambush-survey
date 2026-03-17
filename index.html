@@ -1,0 +1,314 @@
+
+<div id="root"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --teal:#077988;--teal-glow:rgba(7,121,136,0.13);
+  --black:#0A0A0A;--surface:#111;--surface2:#1A1A1A;--surface3:#222;
+  --border:rgba(255,255,255,0.08);--text:#F0EDE8;--text-muted:#888880;--text-dim:#555550;
+  --r:4px;--rl:8px;
+}
+body{font-family:'Barlow',sans-serif;background:var(--black);color:var(--text);font-size:15px;line-height:1.6}
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500&display=swap');
+.app{max-width:760px;margin:0 auto;padding:0 20px 80px}
+.hdr{border-bottom:1px solid var(--border);padding:28px 0 20px;margin-bottom:36px}
+.club{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.18em;color:var(--teal);text-transform:uppercase;margin-bottom:5px}
+.stitle{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--text);line-height:1.1}
+.ssub{font-size:13px;color:var(--text-dim);margin-top:5px}
+.intro{font-size:14px;color:var(--text-muted);line-height:1.75;max-width:580px;margin-bottom:32px;border-left:2px solid var(--teal);padding-left:16px}
+.slbl{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.15em;color:var(--text-dim);text-transform:uppercase;margin-bottom:12px}
+.rcards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px}
+.rcard{border:1px solid var(--border);border-radius:var(--rl);padding:22px 18px;cursor:pointer;background:var(--surface);transition:border-color .15s,background .15s}
+.rcard:hover{border-color:rgba(7,121,136,.35);background:var(--surface2)}
+.rcard.sel{border-color:var(--teal);background:var(--teal-glow)}
+.rcard-icon{font-size:20px;margin-bottom:8px}
+.rcard-title{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;color:var(--text);margin-bottom:3px}
+.rcard-desc{font-size:13px;color:var(--text-muted)}
+.pbwrap{display:flex;align-items:center;gap:12px;margin-bottom:32px}
+.pb{flex:1;height:3px;background:var(--surface3);border-radius:2px;overflow:hidden}
+.pbfill{height:100%;background:var(--teal);transition:width .3s}
+.plbl{font-size:12px;color:var(--text-dim);min-width:72px;text-align:right}
+.shdr{margin-bottom:24px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.snum{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.15em;color:var(--teal);text-transform:uppercase;margin-bottom:5px}
+.stxt{font-family:'Barlow Condensed',sans-serif;font-size:21px;font-weight:800;color:var(--text)}
+.qblock{margin-bottom:28px}
+.qlbl{font-size:14px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.55}
+.qnum{font-family:'Barlow Condensed',sans-serif;color:var(--teal);font-weight:700;margin-right:7px;font-size:15px}
+.obadge{font-size:10px;font-weight:600;letter-spacing:.08em;color:var(--text-dim);text-transform:uppercase;border:1px solid var(--border);border-radius:3px;padding:1px 5px;margin-left:7px;vertical-align:middle}
+.lwrap{display:flex;gap:7px;flex-wrap:wrap}
+.llbls,.nlbls{display:flex;justify-content:space-between;margin-top:5px}
+.llbl{font-size:11px;color:var(--text-dim)}
+.lbtn{flex:1;min-width:42px;max-width:60px;padding:9px 0;text-align:center;border:1px solid var(--border);border-radius:var(--r);background:var(--surface);color:var(--text-muted);cursor:pointer;font-size:14px;font-weight:600;font-family:'Barlow Condensed',sans-serif;transition:all .12s}
+.lbtn:hover{border-color:rgba(7,121,136,.4);color:var(--text)}
+.lbtn.sel{border-color:var(--teal);background:var(--teal-glow);color:var(--teal)}
+.nwrap{display:flex;gap:4px;flex-wrap:wrap}
+.nbtn{width:42px;height:38px;border:1px solid var(--border);border-radius:var(--r);background:var(--surface);color:var(--text-muted);font-size:13px;font-weight:600;cursor:pointer;font-family:'Barlow Condensed',sans-serif;transition:all .12s;display:flex;align-items:center;justify-content:center}
+.nbtn:hover{border-color:rgba(7,121,136,.4);color:var(--text)}
+.nbtn.sel{border-color:var(--teal);background:var(--teal-glow);color:var(--teal)}
+.rgroup{display:flex;flex-direction:column;gap:7px}
+.ropt{display:flex;align-items:center;gap:10px;padding:10px 13px;border:1px solid var(--border);border-radius:var(--r);cursor:pointer;background:var(--surface);font-size:14px;color:var(--text-muted);transition:all .12s}
+.ropt:hover{border-color:rgba(7,121,136,.3);color:var(--text)}
+.ropt.sel{border-color:var(--teal);background:var(--teal-glow);color:var(--text)}
+.rdot{width:15px;height:15px;border-radius:50%;border:1.5px solid var(--text-dim);flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.ropt.sel .rdot{border-color:var(--teal)}
+.rdotfill{width:7px;height:7px;border-radius:50%;background:var(--teal)}
+textarea,input[type=text]{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);color:var(--text);padding:10px 12px;font-family:'Barlow',sans-serif;font-size:14px;resize:vertical;transition:border-color .12s;outline:none}
+textarea{min-height:80px}
+textarea:focus,input[type=text]:focus{border-color:var(--teal)}
+.brow{display:flex;justify-content:space-between;align-items:center;margin-top:36px}
+.btn{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:12px 26px;border-radius:var(--r);cursor:pointer;border:none;transition:all .15s}
+.btn-p{background:var(--teal);color:#fff}
+.btn-p:hover{background:#099aac}
+.btn-p:disabled{opacity:.35;cursor:not-allowed}
+.btn-s{background:transparent;color:var(--text-muted);border:1px solid var(--border)}
+.btn-s:hover{color:var(--text);border-color:rgba(255,255,255,.2)}
+.btn-g{background:transparent;color:var(--text-muted);border:none;font-size:14px;cursor:pointer;font-family:'Barlow',sans-serif;font-weight:400;text-transform:none;letter-spacing:0;padding:0}
+.btn-g:hover{color:var(--text)}
+.cfm{text-align:center;padding:60px 20px}
+.cfmicon{width:64px;height:64px;border-radius:50%;background:var(--teal-glow);border:1px solid var(--teal);display:flex;align-items:center;justify-content:center;margin:0 auto 22px;font-size:26px}
+.cfmtitle{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;margin-bottom:12px}
+.cfmsub{color:var(--text-muted);max-width:420px;margin:0 auto;font-size:14px;line-height:1.75}
+.errmsg{color:#E24B4A;font-size:13px;margin-top:10px;padding:10px 13px;border:1px solid rgba(226,75,74,.3);border-radius:var(--r);background:rgba(226,75,74,.06)}
+@media(max-width:500px){.rcards{grid-template-columns:1fr}.nbtn{width:32px;height:34px;font-size:11px}}
+</style>
+<script>
+const {useState,useCallback}=React;
+const SCRIPT_URL='https://script.google.com/macros/s/AKfycbxqCjUkA4Qa-Tj42rb0OasARwIXS-BV5txdsNtZ2vdL7hdkyS_bzrMxsPbPjr0LZ6H8Ug/exec';
+
+const PS=[
+  {title:'Identity',num:'01',qs:[
+    {id:'name',type:'text',label:'What is your name?',opt:true},
+    {id:'seasons',type:'radio',label:'How many seasons have you been with the Ambush?',opts:['1','2','3','4+']},
+  ]},
+  {title:'Season Reflection',num:'02',qs:[
+    {id:'overall_rating',type:'likert',label:'Overall, how would you rate your 2024–25 season experience with the Ambush?',low:'Poor',high:'Excellent'},
+    {id:'high_point',type:'textarea',label:'What was the single highest point of your season?'},
+    {id:'frustration',type:'textarea',label:'What was the single biggest frustration or disappointment?'},
+  ]},
+  {title:'Culture & Environment',num:'03',qs:[
+    {id:'respected',type:'likert',label:'I felt respected and valued as a member of this organization.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'locker_room',type:'likert',label:'The locker room culture was positive, professional, and conducive to winning.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'safe_feedback',type:'likert',label:'I felt comfortable raising concerns or giving feedback to staff without fear of repercussion.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'wellbeing',type:'likert',label:'The club handled player mental performance and personal wellbeing with appropriate care and attention.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'culture_issues',type:'textarea',label:'If you experienced any issues related to culture or environment, please briefly describe them.',opt:true},
+  ]},
+  {title:'Coaching & Development',num:'04',qs:[
+    {id:'tactical_clarity',type:'likert',label:'The coaching staff communicated tactical expectations clearly and consistently.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'individual_feedback',type:'likert',label:'I received meaningful individual feedback that helped me develop as a player this season.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'pt_transparency',type:'likert',label:'Playing time decisions were communicated to me in a transparent and professional manner.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'film_access',type:'likert',label:'I had adequate access to film, video review, and analytics to support my development.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'sc_program',type:'likert',label:'My physical preparation and strength & conditioning program was appropriate and effective.',low:'Strongly Disagree',high:'Strongly Agree'},
+  ]},
+  {title:'Operations & Logistics',num:'05',qs:[
+    {id:'travel_ops',type:'likert',label:'Travel arrangements, scheduling, and logistics were handled professionally and with player welfare in mind.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'facilities',type:'likert',label:'The facilities and equipment available to the team met an acceptable standard.',low:'Strongly Disagree',high:'Strongly Agree'},
+  ]},
+  {title:'Communication & Front Office',num:'06',qs:[
+    {id:'fo_communication',type:'likert',label:'The front office communicated clearly and kept players appropriately informed throughout the season.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'contract_process',type:'likert',label:'The contract and compensation process was handled fairly and with transparency.',low:'Strongly Disagree',high:'Strongly Agree'},
+  ]},
+  {title:'Return Intent',num:'07',qs:[
+    {id:'return_likelihood',type:'nps',label:'On a scale of 0–10, how likely are you to return to the Ambush next season, assuming the opportunity is available?',low:'Very unlikely',high:'Definitely returning'},
+    {id:'recommend_likelihood',type:'nps',label:'On a scale of 0–10, how likely are you to recommend the Ambush to another professional player?',low:'Would not recommend',high:'Highly recommend'},
+    {id:'return_factor',type:'radio',label:'What is the primary factor driving your return likelihood?',opts:['Coaching staff quality','Playing time opportunity','Competitive level / winning culture','Compensation','Location / personal reasons','Club trajectory & growth','Other']},
+  ]},
+  {title:'Open Feedback',num:'08',qs:[
+    {id:'strength',type:'textarea',label:'What is the one thing this club does exceptionally well that should never change?'},
+    {id:'improvement',type:'textarea',label:'What is the single most important thing the organization should improve before next season?'},
+    {id:'anything_else',type:'textarea',label:"Is there anything else you'd like leadership to know?",opt:true},
+  ]},
+];
+
+const SS=[
+  {title:'Identity',num:'01',qs:[
+    {id:'name',type:'text',label:'What is your name?',opt:true},
+    {id:'role',type:'radio',label:'What best describes your role?',opts:['Head Coach','Assistant Coach','Goalkeeper Coach','Video & Analytics','S&C / Medical','Operations','Front Office','Other']},
+    {id:'seasons',type:'radio',label:'How many seasons have you been with the Ambush?',opts:['1','2','3','4+']},
+  ]},
+  {title:'Season Reflection',num:'02',qs:[
+    {id:'overall_rating',type:'likert',label:'Overall, how would you rate your 2024–25 experience working with the Ambush?',low:'Poor',high:'Excellent'},
+    {id:'rewarding',type:'textarea',label:'What was the most rewarding aspect of this season for you professionally?'},
+    {id:'challenge',type:'textarea',label:'What was your biggest professional frustration or challenge this season?'},
+  ]},
+  {title:'Culture & Organizational Environment',num:'03',qs:[
+    {id:'respected',type:'likert',label:'I felt respected, supported, and valued in my role within this organization.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'staff_culture',type:'likert',label:'The staff culture was collaborative, professional, and aligned around a common mission.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'empowered',type:'likert',label:'I felt empowered to do my job effectively without unnecessary interference or obstacles.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'wellbeing',type:'likert',label:'The organization takes staff wellbeing seriously.',low:'Strongly Disagree',high:'Strongly Agree'},
+  ]},
+  {title:'Role, Resources & Support',num:'04',qs:[
+    {id:'role_clarity',type:'likert',label:'My role and responsibilities were clearly defined and communicated.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'resources',type:'likert',label:'I had the tools, resources, and budget necessary to perform my job at a high level.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'workload',type:'likert',label:'Workload and time demands were reasonable and sustainable.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'tools_needed',type:'textarea',label:'What resources or tools, if added, would most improve your effectiveness next season?'},
+  ]},
+  {title:'Leadership & Front Office',num:'05',qs:[
+    {id:'vision_clarity',type:'likert',label:'Club leadership communicated the organizational vision clearly and consistently throughout the season.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'decision_transparency',type:'likert',label:"Decision-making at the leadership level felt transparent and aligned with the club's stated goals.",low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'trust_leadership',type:'likert',label:'I trust that leadership is taking this club in the right direction.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'compensation_fair',type:'likert',label:'Compensation and contractual matters were handled fairly and professionally.',low:'Strongly Disagree',high:'Strongly Agree'},
+  ]},
+  {title:'Operations & Logistics',num:'06',qs:[
+    {id:'travel_ops',type:'likert',label:'Travel, scheduling, and operational logistics were managed at a professional standard.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'facilities',type:'likert',label:"Facilities and equipment adequately supported the staff's ability to prepare and perform.",low:'Strongly Disagree',high:'Strongly Agree'},
+  ]},
+  {title:'Return Intent',num:'07',qs:[
+    {id:'return_likelihood',type:'nps',label:'On a scale of 0–10, how likely are you to return to the Ambush in your current or a similar role next season?',low:'Very unlikely',high:'Definitely returning'},
+    {id:'recommend_likelihood',type:'nps',label:'On a scale of 0–10, how likely are you to recommend this organization to a coaching or operations professional in your network?',low:'Would not recommend',high:'Highly recommend'},
+    {id:'return_factor',type:'radio',label:'What is the primary factor influencing your return likelihood?',opts:["Belief in club's direction & leadership",'Staff and coaching relationships','Role scope & professional growth','Compensation','Competitive environment','Personal / geographic reasons','Other']},
+  ]},
+  {title:'Open Feedback',num:'08',qs:[
+    {id:'strength',type:'textarea',label:'What is one thing this organization does at a genuinely high level that should be protected and built upon?'},
+    {id:'improvement',type:'textarea',label:'What is the single highest-leverage improvement the club could make before next season?'},
+    {id:'anything_else',type:'textarea',label:'Any additional comments for leadership?',opt:true},
+  ]},
+];
+
+function Question({q,num,ans,setAns}){
+  const n=String(num).padStart(2,'0');
+  return React.createElement('div',{className:'qblock'},
+    React.createElement('div',{className:'qlbl'},
+      React.createElement('span',{className:'qnum'},n),
+      q.label,
+      q.opt&&React.createElement('span',{className:'obadge'},'Optional')
+    ),
+    q.type==='likert'&&React.createElement('div',null,
+      React.createElement('div',{className:'lwrap'},
+        [1,2,3,4,5].map(v=>React.createElement('button',{key:v,className:'lbtn'+(ans==v?' sel':''),onClick:()=>setAns(q.id,v)},v))
+      ),
+      React.createElement('div',{className:'llbls'},
+        React.createElement('span',{className:'llbl'},q.low),
+        React.createElement('span',{className:'llbl'},q.high)
+      )
+    ),
+    q.type==='nps'&&React.createElement('div',null,
+      React.createElement('div',{className:'nwrap'},
+        [0,1,2,3,4,5,6,7,8,9,10].map(v=>React.createElement('button',{key:v,className:'nbtn'+(ans==v?' sel':''),onClick:()=>setAns(q.id,v)},v))
+      ),
+      React.createElement('div',{className:'nlbls'},
+        React.createElement('span',{className:'llbl'},q.low),
+        React.createElement('span',{className:'llbl'},q.high)
+      )
+    ),
+    q.type==='radio'&&React.createElement('div',{className:'rgroup'},
+      q.opts.map(opt=>React.createElement('div',{key:opt,className:'ropt'+(ans===opt?' sel':''),onClick:()=>setAns(q.id,opt)},
+        React.createElement('div',{className:'rdot'},ans===opt&&React.createElement('div',{className:'rdotfill'})),
+        React.createElement('span',null,opt)
+      ))
+    ),
+    q.type==='textarea'&&React.createElement('textarea',{placeholder:'Your response...',value:ans||'',onChange:e=>setAns(q.id,e.target.value)}),
+    q.type==='text'&&React.createElement('input',{type:'text',placeholder:'Your response...',value:ans||'',onChange:e=>setAns(q.id,e.target.value)})
+  );
+}
+
+function App(){
+  const [screen,setScreen]=useState('role');
+  const [role,setRole]=useState(null);
+  const [si,setSi]=useState(0);
+  const [answers,setAnswers]=useState({});
+  const [submitting,setSubmitting]=useState(false);
+  const [submitted,setSubmitted]=useState(false);
+  const [err,setErr]=useState(null);
+
+  const setAns=useCallback((id,val)=>setAnswers(a=>({...a,[id]:val})),[]);
+  const sections=role==='player'?PS:SS;
+
+  const complete=()=>{
+    if(!sections[si])return false;
+    return sections[si].qs.every(q=>{
+      if(q.opt)return true;
+      const a=answers[q.id];
+      return a!==undefined&&a!==null&&a!==''&&!(Array.isArray(a)&&!a.length);
+    });
+  };
+
+  const submit=async()=>{
+    setSubmitting(true);setErr(null);
+    try{
+      const payload={role,timestamp:new Date().toISOString(),...answers};
+      // Send as URL-encoded form data — Google Apps Script reads this via e.parameter
+      const body=Object.entries(payload)
+        .map(([k,v])=>encodeURIComponent(k)+'='+encodeURIComponent(v==null?'':v))
+        .join('&');
+      await fetch(SCRIPT_URL,{
+        method:'POST',
+        mode:'no-cors',
+        headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body
+      });
+      setSubmitted(true);
+    }catch(e){
+      setErr('Submission failed. Please try again or contact Ambush staff directly.');
+    }
+    setSubmitting(false);
+  };
+
+  const Header=()=>React.createElement('div',{className:'hdr'},
+    React.createElement('div',{className:'club'},'St. Louis Ambush'),
+    React.createElement('div',{className:'stitle'},'End-of-Year Exit Survey'),
+    React.createElement('div',{className:'ssub'},'2024–25 Season')
+  );
+
+  if(submitted) return React.createElement('div',{className:'app'},
+    React.createElement(Header),
+    React.createElement('div',{className:'cfm'},
+      React.createElement('div',{className:'cfmicon'},'✓'),
+      React.createElement('div',{className:'cfmtitle'},'Survey Complete'),
+      React.createElement('p',{className:'cfmsub'},'Thank you for your time and your honesty. Your feedback has been submitted and will be reviewed by club leadership. We appreciate everything you brought to the 2024–25 season.')
+    )
+  );
+
+  if(screen==='role') return React.createElement('div',{className:'app'},
+    React.createElement(Header),
+    React.createElement('p',{className:'intro'},'Thank you for being part of the 2024–25 St. Louis Ambush season. This survey is your opportunity to share honest, candid feedback that directly shapes how this club grows. Your responses are reviewed at every level of the organization. Providing your name is entirely optional.'),
+    React.createElement('div',{className:'slbl'},'Select your role to begin'),
+    React.createElement('div',{className:'rcards'},
+      React.createElement('div',{className:'rcard'+(role==='player'?' sel':''),onClick:()=>setRole('player')},
+        React.createElement('div',{className:'rcard-icon'},'⚽'),
+        React.createElement('div',{className:'rcard-title'},'Player'),
+        React.createElement('div',{className:'rcard-desc'},'MASL Roster Member')
+      ),
+      React.createElement('div',{className:'rcard'+(role==='staff'?' sel':''),onClick:()=>setRole('staff')},
+        React.createElement('div',{className:'rcard-icon'},'📋'),
+        React.createElement('div',{className:'rcard-title'},'Coaching & Staff'),
+        React.createElement('div',{className:'rcard-desc'},'Coaches, Operations, Front Office')
+      )
+    ),
+    React.createElement('div',{className:'brow',style:{justifyContent:'flex-end'}},
+      React.createElement('button',{className:'btn btn-p',disabled:!role,onClick:()=>{setScreen('survey');setSi(0);}},'Begin Survey →')
+    )
+  );
+
+  const section=sections[si];
+  const isLast=si===sections.length-1;
+  const pct=Math.round((si/sections.length)*100);
+  let qNum=1;
+  for(let x=0;x<si;x++)qNum+=sections[x].qs.length;
+
+  return React.createElement('div',{className:'app'},
+    React.createElement(Header),
+    React.createElement('div',{className:'pbwrap'},
+      React.createElement('div',{className:'pb'},React.createElement('div',{className:'pbfill',style:{width:pct+'%'}})),
+      React.createElement('div',{className:'plbl'},'Section '+(si+1)+' of '+sections.length)
+    ),
+    React.createElement('div',{className:'shdr'},
+      React.createElement('div',{className:'snum'},'Section '+section.num),
+      React.createElement('div',{className:'stxt'},section.title)
+    ),
+    section.qs.map((q,i)=>React.createElement(Question,{key:q.id,q,num:qNum+i,ans:answers[q.id],setAns})),
+    err&&React.createElement('div',{className:'errmsg'},err),
+    React.createElement('div',{className:'brow'},
+      si>0
+        ?React.createElement('button',{className:'btn btn-s',onClick:()=>{setSi(s=>s-1);window.scrollTo(0,0);}},'← Back')
+        :React.createElement('button',{className:'btn btn-g',onClick:()=>{setScreen('role');setSi(0);}},'← Change role'),
+      isLast
+        ?React.createElement('button',{className:'btn btn-p',disabled:!complete()||submitting,onClick:submit},submitting?'Submitting...':'Submit Survey')
+        :React.createElement('button',{className:'btn btn-p',disabled:!complete(),onClick:()=>{setSi(s=>s+1);window.scrollTo(0,0);}},'Next Section →')
+    )
+  );
+}
+
+ReactDOM.render(React.createElement(App),document.getElementById('root'));
+</script>
