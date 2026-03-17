@@ -83,7 +83,7 @@ const PS=[
     {id:'seasons',type:'radio',label:'How many seasons have you been with the Ambush?',opts:['1','2','3','4+']},
   ]},
   {title:'Season Reflection',num:'02',qs:[
-    {id:'overall_rating',type:'likert',label:'Overall, how would you rate your 2024–25 season experience with the Ambush?',low:'Poor',high:'Excellent'},
+    {id:'overall_rating',type:'likert',label:'Overall, how would you rate your 2025–26 season experience with the Ambush?',low:'Poor',high:'Excellent'},
     {id:'high_point',type:'textarea',label:'What was the single highest point of your season?'},
     {id:'frustration',type:'textarea',label:'What was the single biggest frustration or disappointment?'},
   ]},
@@ -128,7 +128,7 @@ const SS=[
     {id:'seasons',type:'radio',label:'How many seasons have you been with the Ambush?',opts:['1','2','3','4+']},
   ]},
   {title:'Season Reflection',num:'02',qs:[
-    {id:'overall_rating',type:'likert',label:'Overall, how would you rate your 2024–25 experience working with the Ambush?',low:'Poor',high:'Excellent'},
+    {id:'overall_rating',type:'likert',label:'Overall, how would you rate your 2025–26 experience working with the Ambush?',low:'Poor',high:'Excellent'},
     {id:'rewarding',type:'textarea',label:'What was the most rewarding aspect of this season for you professionally?'},
     {id:'challenge',type:'textarea',label:'What was your biggest professional frustration or challenge this season?'},
   ]},
@@ -248,7 +248,7 @@ function App(){
   const Header=()=>React.createElement('div',{className:'hdr'},
     React.createElement('div',{className:'club'},'St. Louis Ambush'),
     React.createElement('div',{className:'stitle'},'End-of-Year Exit Survey'),
-    React.createElement('div',{className:'ssub'},'2024–25 Season')
+    React.createElement('div',{className:'ssub'},'2025–26 Season')
   );
 
   if(submitted) return React.createElement('div',{className:'app'},
@@ -256,13 +256,13 @@ function App(){
     React.createElement('div',{className:'cfm'},
       React.createElement('div',{className:'cfmicon'},'✓'),
       React.createElement('div',{className:'cfmtitle'},'Survey Complete'),
-      React.createElement('p',{className:'cfmsub'},'Thank you for your time and your honesty. Your feedback has been submitted and will be reviewed by club leadership. We appreciate everything you brought to the 2024–25 season.')
+      React.createElement('p',{className:'cfmsub'},'Thank you for your time and your honesty. Your feedback has been submitted and will be reviewed by club leadership. We appreciate everything you brought to the 2025–26 season.')
     )
   );
 
   if(screen==='role') return React.createElement('div',{className:'app'},
     React.createElement(Header),
-    React.createElement('p',{className:'intro'},'Thank you for being part of the 2024–25 St. Louis Ambush season. This survey is your opportunity to share honest, candid feedback that directly shapes how this club grows. Your responses are reviewed at every level of the organization. Providing your name is entirely optional.'),
+    React.createElement('p',{className:'intro'},'Thank you for being part of the 2025–26 St. Louis Ambush season. This survey is your opportunity to share honest, candid feedback that directly shapes how this club grows. Your responses are reviewed at every level of the organization. Providing your name is entirely optional.'),
     React.createElement('div',{className:'slbl'},'Select your role to begin'),
     React.createElement('div',{className:'rcards'},
       React.createElement('div',{className:'rcard'+(role==='player'?' sel':''),onClick:()=>setRole('player')},
