@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>St. Louis Ambush — Exit Survey</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --teal:#077988;
+  --teal-glow:rgba(7,121,136,0.13);
+  --teal-hover:rgba(7,121,136,0.35);
+  --black:#0A0A0A;
+  --surface:#111111;
+  --surface2:#1A1A1A;
+  --surface3:#222222;
+  --border:rgba(255,255,255,0.08);
+  --text:#F0EDE8;
+  --text-muted:#888880;
+  --text-dim:#555550;
+  --r:4px;
+  --rl:8px;
+}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{
+  font-family:'Barlow',sans-serif;
+  background:var(--black);
+  color:var(--text);
+  font-size:16px;
+  line-height:1.6;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+.app{
+  max-width:720px;
+  margin:0 auto;
+  padding:0 24px 100px;
+}
+
+/* HEADER */
+.hdr{border-bottom:1px solid var(--border);padding:32px 0 22px;margin-bottom:36px}
+.club{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.18em;color:var(--teal);text-transform:uppercase;margin-bottom:6px}
+.stitle{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:800;color:var(--text);line-height:1.1}
+.ssub{font-size:13px;color:var(--text-dim);margin-top:6px}
+
+/* INTRO */
+.intro{font-size:15px;color:var(--text-muted);line-height:1.75;max-width:580px;margin-bottom:32px;border-left:2px solid var(--teal);padding-left:16px}
+.slbl{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.15em;color:var(--text-dim);text-transform:uppercase;margin-bottom:14px}
+
+/* ROLE CARDS */
+.rcards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px}
+.rcard{border:1px solid var(--border);border-radius:var(--rl);padding:24px 20px;cursor:pointer;background:var(--surface);transition:border-color .15s,background .15s;-webkit-tap-highlight-color:transparent}
+.rcard:hover{border-color:var(--teal-hover);background:var(--surface2)}
+.rcard:active{background:var(--teal-glow)}
+.rcard.sel{border-color:var(--teal);background:var(--teal-glow)}
+.rcard-icon{font-size:24px;margin-bottom:10px;line-height:1}
+.rcard-title{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:700;color:var(--text);margin-bottom:4px}
+.rcard-desc{font-size:13px;color:var(--text-muted)}
+
+/* PROGRESS */
+.pbwrap{display:flex;align-items:center;gap:12px;margin-bottom:32px}
+.pb{flex:1;height:3px;background:var(--surface3);border-radius:2px;overflow:hidden}
+.pbfill{height:100%;background:var(--teal);transition:width .35s ease}
+.plbl{font-size:12px;color:var(--text-dim);white-space:nowrap}
+
+/* SECTION HEADER */
+.shdr{margin-bottom:24px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.snum{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.15em;color:var(--teal);text-transform:uppercase;margin-bottom:5px}
+.stxt{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;color:var(--text)}
+
+/* QUESTION */
+.qblock{margin-bottom:30px}
+.qlbl{font-size:15px;font-weight:500;color:var(--text);margin-bottom:12px;line-height:1.5}
+.qnum{font-family:'Barlow Condensed',sans-serif;color:var(--teal);font-weight:700;margin-right:8px;font-size:16px}
+.obadge{font-size:10px;font-weight:600;letter-spacing:.08em;color:var(--text-dim);text-transform:uppercase;border:1px solid var(--border);border-radius:3px;padding:1px 5px;margin-left:7px;vertical-align:middle}
+
+/* LIKERT */
+.lwrap{display:flex;gap:8px}
+.llbls,.nlbls{display:flex;justify-content:space-between;margin-top:6px}
+.llbl{font-size:11px;color:var(--text-dim)}
+.lbtn{
+  flex:1;padding:11px 0;text-align:center;
+  border:1px solid var(--border);border-radius:var(--r);
+  background:var(--surface);color:var(--text-muted);
+  cursor:pointer;font-size:15px;font-weight:700;
+  font-family:'Barlow Condensed',sans-serif;
+  transition:all .12s;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+.lbtn:hover{border-color:var(--teal-hover);color:var(--text)}
+.lbtn:active,.lbtn.sel{border-color:var(--teal);background:var(--teal-glow);color:var(--teal)}
+
+/* NPS */
+.nwrap{display:flex;gap:5px;flex-wrap:wrap}
+.nbtn{
+  width:48px;height:44px;
+  border:1px solid var(--border);border-radius:var(--r);
+  background:var(--surface);color:var(--text-muted);
+  font-size:14px;font-weight:700;
+  cursor:pointer;font-family:'Barlow Condensed',sans-serif;
+  transition:all .12s;
+  display:flex;align-items:center;justify-content:center;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+.nbtn:hover{border-color:var(--teal-hover);color:var(--text)}
+.nbtn:active,.nbtn.sel{border-color:var(--teal);background:var(--teal-glow);color:var(--teal)}
+
+/* RADIO */
+.rgroup{display:flex;flex-direction:column;gap:8px}
+.ropt{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 14px;
+  border:1px solid var(--border);border-radius:var(--r);
+  cursor:pointer;background:var(--surface);
+  font-size:15px;color:var(--text-muted);
+  transition:all .12s;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+  min-height:48px;
+}
+.ropt:hover{border-color:var(--teal-hover);color:var(--text)}
+.ropt:active,.ropt.sel{border-color:var(--teal);background:var(--teal-glow);color:var(--text)}
+.rdot{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--text-dim);flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.ropt.sel .rdot{border-color:var(--teal)}
+.rdotfill{width:8px;height:8px;border-radius:50%;background:var(--teal)}
+
+/* TEXT INPUTS */
+textarea,input[type=text]{
+  width:100%;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  color:var(--text);
+  padding:12px 14px;
+  font-family:'Barlow',sans-serif;
+  font-size:16px;
+  resize:vertical;
+  transition:border-color .12s;
+  outline:none;
+  -webkit-appearance:none;
+  appearance:none;
+}
+textarea{min-height:88px}
+textarea:focus,input[type=text]:focus{border-color:var(--teal)}
+
+/* BUTTONS */
+.brow{display:flex;justify-content:space-between;align-items:center;margin-top:36px;gap:12px}
+.btn{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:15px;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:14px 28px;border-radius:var(--r);
+  cursor:pointer;border:none;
+  transition:all .15s;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+  white-space:nowrap;
+}
+.btn-p{background:var(--teal);color:#fff}
+.btn-p:hover{background:#099aac}
+.btn-p:active{background:#066b79}
+.btn-p:disabled{opacity:.35;cursor:not-allowed}
+.btn-s{background:transparent;color:var(--text-muted);border:1px solid var(--border)}
+.btn-s:hover{color:var(--text);border-color:rgba(255,255,255,.2)}
+.btn-g{background:transparent;color:var(--text-muted);border:none;font-size:14px;cursor:pointer;font-family:'Barlow',sans-serif;font-weight:400;text-transform:none;letter-spacing:0;padding:0}
+.btn-g:hover{color:var(--text)}
+
+/* CONFIRM */
+.cfm{text-align:center;padding:64px 16px}
+.cfmicon{width:72px;height:72px;border-radius:50%;background:var(--teal-glow);border:1px solid var(--teal);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:30px}
+.cfmtitle{font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;margin-bottom:14px}
+.cfmsub{color:var(--text-muted);max-width:400px;margin:0 auto;font-size:15px;line-height:1.75}
+
+.errmsg{color:#E24B4A;font-size:13px;margin-top:12px;padding:10px 14px;border:1px solid rgba(226,75,74,.3);border-radius:var(--r);background:rgba(226,75,74,.06)}
+
+/* ── RESPONSIVE BREAKPOINTS ── */
+
+/* Large desktop */
+@media(min-width:1200px){
+  .app{padding:0 40px 120px}
+  .stitle{font-size:36px}
+  .lbtn{font-size:16px;padding:13px 0}
+  .nbtn{width:52px;height:46px}
+}
+
+/* Tablet (768–1199px) */
+@media(max-width:1199px) and (min-width:768px){
+  .app{padding:0 32px 100px}
+  .stitle{font-size:30px}
+}
+
+/* Mobile landscape + small tablet (500–767px) */
+@media(max-width:767px) and (min-width:500px){
+  .app{padding:0 20px 80px}
+  .stitle{font-size:26px}
+  .nbtn{width:44px;height:40px;font-size:13px}
+  .nwrap{gap:4px}
+}
+
+/* Mobile portrait (under 500px) */
+@media(max-width:499px){
+  .app{padding:0 16px 80px}
+  .hdr{padding:24px 0 18px;margin-bottom:28px}
+  .stitle{font-size:24px}
+  .ssub{font-size:12px}
+  .intro{font-size:14px}
+  .rcards{grid-template-columns:1fr;gap:10px}
+  .rcard{padding:18px 16px}
+  .qlbl{font-size:14px}
+  .lbtn{font-size:14px;padding:10px 0}
+  .lwrap{gap:6px}
+  .nbtn{width:36px;height:38px;font-size:12px}
+  .nwrap{gap:3px}
+  .ropt{padding:11px 12px;font-size:14px}
+  textarea,input[type=text]{font-size:16px;padding:11px 12px}
+  .btn{padding:13px 20px;font-size:14px}
+  .brow{gap:10px}
+  .stxt{font-size:20px}
+  .shdr{margin-bottom:20px}
+  .qblock{margin-bottom:26px}
+}
+
+/* Very small phones (under 360px) */
+@media(max-width:359px){
+  .nbtn{width:30px;height:34px;font-size:11px}
+  .nwrap{gap:2px}
+  .btn{padding:12px 14px;font-size:13px}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script>
+const {useState,useCallback}=React;
+const SCRIPT_URL='https://script.google.com/macros/s/AKfycbxqCjUkA4Qa-Tj42rb0OasARwIXS-BV5txdsNtZ2vdL7hdkyS_bzrMxsPbPjr0LZ6H8Ug/exec';
+
+const PS=[
+  {title:'Identity',num:'01',qs:[
+    {id:'name',type:'text',label:'What is your name?',opt:true},
+    {id:'seasons',type:'radio',label:'How many seasons have you been with the Ambush?',opts:['1','2','3','4+']},
+  ]},
+  {title:'Season Reflection',num:'02',qs:[
+    {id:'overall_rating',type:'likert',label:'Overall, how would you rate your 2024-25 season experience with the Ambush?',low:'Poor',high:'Excellent'},
+    {id:'high_point',type:'textarea',label:'What was the single highest point of your season?'},
+    {id:'frustration',type:'textarea',label:'What was the single biggest frustration or disappointment?'},
+  ]},
+  {title:'Culture & Environment',num:'03',qs:[
+    {id:'respected',type:'likert',label:'I felt respected and valued as a member of this organization.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'locker_room',type:'likert',label:'The locker room culture was positive, professional, and conducive to winning.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'safe_feedback',type:'likert',label:'I felt comfortable raising concerns or giving feedback to staff without fear of repercussion.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'wellbeing',type:'likert',label:'The club handled player mental performance and personal wellbeing with appropriate care and attention.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'culture_issues',type:'textarea',label:'If you experienced any issues related to culture or environment, please briefly describe them.',opt:true},
+  ]},
+  {title:'Coaching & Development',num:'04',qs:[
+    {id:'tactical_clarity',type:'likert',label:'The coaching staff communicated tactical expectations clearly and consistently.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'individual_feedback',type:'likert',label:'I received meaningful individual feedback that helped me develop as a player this season.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'pt_transparency',type:'likert',label:'Playing time decisions were communicated to me in a transparent and professional manner.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'film_access',type:'likert',label:'I had adequate access to film, video review, and analytics to support my development.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'sc_program',type:'likert',label:'My physical preparation and strength & conditioning program was appropriate and effective.',low:'Strongly Disagree',high:'Strongly Agree'},
+  ]},
+  {title:'Operations & Logistics',num:'05',qs:[
+    {id:'travel_ops',type:'likert',label:'Travel arrangements, scheduling, and logistics were handled professionally and with player welfare in mind.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'facilities',type:'likert',label:'The facilities and equipment available to the team met an acceptable standard.',low:'Strongly Disagree',high:'Strongly Agree'},
+  ]},
+  {title:'Communication & Front Office',num:'06',qs:[
+    {id:'fo_communication',type:'likert',label:'The front office communicated clearly and kept players appropriately informed throughout the season.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'contract_process',type:'likert',label:'The contract and compensation process was handled fairly and with transparency.',low:'Strongly Disagree',high:'Strongly Agree'},
+  ]},
+  {title:'Return Intent',num:'07',qs:[
+    {id:'return_likelihood',type:'nps',label:'On a scale of 0-10, how likely are you to return to the Ambush next season, assuming the opportunity is available?',low:'Very unlikely',high:'Definitely returning'},
+    {id:'recommend_likelihood',type:'nps',label:'On a scale of 0-10, how likely are you to recommend the Ambush to another professional player?',low:'Would not recommend',high:'Highly recommend'},
+    {id:'return_factor',type:'radio',label:'What is the primary factor driving your return likelihood?',opts:['Coaching staff quality','Playing time opportunity','Competitive level / winning culture','Compensation','Location / personal reasons','Club trajectory & growth','Other']},
+  ]},
+  {title:'Open Feedback',num:'08',qs:[
+    {id:'strength',type:'textarea',label:'What is the one thing this club does exceptionally well that should never change?'},
+    {id:'improvement',type:'textarea',label:'What is the single most important thing the organization should improve before next season?'},
+    {id:'anything_else',type:'textarea',label:"Is there anything else you'd like leadership to know?",opt:true},
+  ]},
+];
+
+const SS=[
+  {title:'Identity',num:'01',qs:[
+    {id:'name',type:'text',label:'What is your name?',opt:true},
+    {id:'role',type:'radio',label:'What best describes your role?',opts:['Head Coach','Assistant Coach','Goalkeeper Coach','Video & Analytics','S&C / Medical','Operations','Front Office','Other']},
+    {id:'seasons',type:'radio',label:'How many seasons have you been with the Ambush?',opts:['1','2','3','4+']},
+  ]},
+  {title:'Season Reflection',num:'02',qs:[
+    {id:'overall_rating',type:'likert',label:'Overall, how would you rate your 2024-25 experience working with the Ambush?',low:'Poor',high:'Excellent'},
+    {id:'rewarding',type:'textarea',label:'What was the most rewarding aspect of this season for you professionally?'},
+    {id:'challenge',type:'textarea',label:'What was your biggest professional frustration or challenge this season?'},
+  ]},
+  {title:'Culture & Organizational Environment',num:'03',qs:[
+    {id:'respected',type:'likert',label:'I felt respected, supported, and valued in my role within this organization.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'staff_culture',type:'likert',label:'The staff culture was collaborative, professional, and aligned around a common mission.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'empowered',type:'likert',label:'I felt empowered to do my job effectively without unnecessary interference or obstacles.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'wellbeing',type:'likert',label:'The organization takes staff wellbeing seriously.',low:'Strongly Disagree',high:'Strongly Agree'},
+  ]},
+  {title:'Role, Resources & Support',num:'04',qs:[
+    {id:'role_clarity',type:'likert',label:'My role and responsibilities were clearly defined and communicated.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'resources',type:'likert',label:'I had the tools, resources, and budget necessary to perform my job at a high level.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'workload',type:'likert',label:'Workload and time demands were reasonable and sustainable.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'tools_needed',type:'textarea',label:'What resources or tools, if added, would most improve your effectiveness next season?'},
+  ]},
+  {title:'Leadership & Front Office',num:'05',qs:[
+    {id:'vision_clarity',type:'likert',label:'Club leadership communicated the organizational vision clearly and consistently throughout the season.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'decision_transparency',type:'likert',label:"Decision-making at the leadership level felt transparent and aligned with the club's stated goals.",low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'trust_leadership',type:'likert',label:'I trust that leadership is taking this club in the right direction.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'compensation_fair',type:'likert',label:'Compensation and contractual matters were handled fairly and professionally.',low:'Strongly Disagree',high:'Strongly Agree'},
+  ]},
+  {title:'Operations & Logistics',num:'06',qs:[
+    {id:'travel_ops',type:'likert',label:'Travel, scheduling, and operational logistics were managed at a professional standard.',low:'Strongly Disagree',high:'Strongly Agree'},
+    {id:'facilities',type:'likert',label:"Facilities and equipment adequately supported the staff's ability to prepare and perform.",low:'Strongly Disagree',high:'Strongly Agree'},
+  ]},
+  {title:'Return Intent',num:'07',qs:[
+    {id:'return_likelihood',type:'nps',label:'On a scale of 0-10, how likely are you to return to the Ambush in your current or a similar role next season?',low:'Very unlikely',high:'Definitely returning'},
+    {id:'recommend_likelihood',type:'nps',label:'On a scale of 0-10, how likely are you to recommend this organization to a coaching or operations professional in your network?',low:'Would not recommend',high:'Highly recommend'},
+    {id:'return_factor',type:'radio',label:'What is the primary factor influencing your return likelihood?',opts:["Belief in club's direction & leadership",'Staff and coaching relationships','Role scope & professional growth','Compensation','Competitive environment','Personal / geographic reasons','Other']},
+  ]},
+  {title:'Open Feedback',num:'08',qs:[
+    {id:'strength',type:'textarea',label:'What is one thing this organization does at a genuinely high level that should be protected and built upon?'},
+    {id:'improvement',type:'textarea',label:'What is the single highest-leverage improvement the club could make before next season?'},
+    {id:'anything_else',type:'textarea',label:'Any additional comments for leadership?',opt:true},
+  ]},
+];
+
+function Question({q,num,ans,setAns}){
+  const n=String(num).padStart(2,'0');
+  const e=React.createElement;
+  return e('div',{className:'qblock'},
+    e('div',{className:'qlbl'},
+      e('span',{className:'qnum'},n),
+      q.label,
+      q.opt&&e('span',{className:'obadge'},'Optional')
+    ),
+    q.type==='likert'&&e('div',null,
+      e('div',{className:'lwrap'},
+        [1,2,3,4,5].map(v=>e('button',{key:v,className:'lbtn'+(ans==v?' sel':''),onClick:()=>setAns(q.id,v),type:'button'},v))
+      ),
+      e('div',{className:'llbls'},e('span',{className:'llbl'},q.low),e('span',{className:'llbl'},q.high))
+    ),
+    q.type==='nps'&&e('div',null,
+      e('div',{className:'nwrap'},
+        [0,1,2,3,4,5,6,7,8,9,10].map(v=>e('button',{key:v,className:'nbtn'+(ans==v?' sel':''),onClick:()=>setAns(q.id,v),type:'button'},v))
+      ),
+      e('div',{className:'nlbls'},e('span',{className:'llbl'},q.low),e('span',{className:'llbl'},q.high))
+    ),
+    q.type==='radio'&&e('div',{className:'rgroup'},
+      q.opts.map(opt=>e('div',{key:opt,className:'ropt'+(ans===opt?' sel':''),onClick:()=>setAns(q.id,opt)},
+        e('div',{className:'rdot'},ans===opt&&e('div',{className:'rdotfill'})),
+        e('span',null,opt)
+      ))
+    ),
+    q.type==='textarea'&&e('textarea',{placeholder:'Your response...',value:ans||'',onChange:ev=>setAns(q.id,ev.target.value),rows:4}),
+    q.type==='text'&&e('input',{type:'text',placeholder:'Your response...',value:ans||'',onChange:ev=>setAns(q.id,ev.target.value)})
+  );
+}
+
+function App(){
+  const e=React.createElement;
+  const [screen,setScreen]=useState('role');
+  const [role,setRole]=useState(null);
+  const [si,setSi]=useState(0);
+  const [answers,setAnswers]=useState({});
+  const [submitting,setSubmitting]=useState(false);
+  const [submitted,setSubmitted]=useState(false);
+  const [err,setErr]=useState(null);
+  const setAns=useCallback((id,val)=>setAnswers(a=>({...a,[id]:val})),[]);
+  const sections=role==='player'?PS:SS;
+
+  const complete=()=>{
+    if(!sections[si])return false;
+    return sections[si].qs.every(q=>{
+      if(q.opt)return true;
+      const a=answers[q.id];
+      return a!==undefined&&a!==null&&a!==''&&!(Array.isArray(a)&&!a.length);
+    });
+  };
+
+  const submit=async()=>{
+    setSubmitting(true);setErr(null);
+    try{
+      const payload={role,timestamp:new Date().toISOString(),...answers};
+      const body=Object.entries(payload).map(([k,v])=>encodeURIComponent(k)+'='+encodeURIComponent(v==null?'':v)).join('&');
+      await fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body});
+      setSubmitted(true);
+    }catch(ex){
+      setErr('Submission failed. Please try again or contact Ambush staff directly.');
+    }
+    setSubmitting(false);
+  };
+
+  const Header=()=>e('div',{className:'hdr'},
+    e('div',{className:'club'},'St. Louis Ambush'),
+    e('div',{className:'stitle'},'End-of-Year Exit Survey'),
+    e('div',{className:'ssub'},'2024-25 Season')
+  );
+
+  if(submitted)return e('div',{className:'app'},
+    e(Header),
+    e('div',{className:'cfm'},
+      e('div',{className:'cfmicon'},'✓'),
+      e('div',{className:'cfmtitle'},'Survey Complete'),
+      e('p',{className:'cfmsub'},'Thank you for your time and your honesty. Your feedback has been submitted and will be reviewed by club leadership. We appreciate everything you brought to the 2024-25 season.')
+    )
+  );
+
+  if(screen==='role')return e('div',{className:'app'},
+    e(Header),
+    e('p',{className:'intro'},'Thank you for being part of the 2024-25 St. Louis Ambush season. This survey is your opportunity to share honest, candid feedback that directly shapes how this club grows. Your responses are reviewed at every level of the organization. Providing your name is entirely optional.'),
+    e('div',{className:'slbl'},'Select your role to begin'),
+    e('div',{className:'rcards'},
+      e('div',{className:'rcard'+(role==='player'?' sel':''),onClick:()=>setRole('player')},
+        e('div',{className:'rcard-icon'},'⚽'),
+        e('div',{className:'rcard-title'},'Player'),
+        e('div',{className:'rcard-desc'},'MASL Roster Member')
+      ),
+      e('div',{className:'rcard'+(role==='staff'?' sel':''),onClick:()=>setRole('staff')},
+        e('div',{className:'rcard-icon'},'📋'),
+        e('div',{className:'rcard-title'},'Coaching & Staff'),
+        e('div',{className:'rcard-desc'},'Coaches, Operations, Front Office')
+      )
+    ),
+    e('div',{className:'brow',style:{justifyContent:'flex-end'}},
+      e('button',{className:'btn btn-p',disabled:!role,type:'button',onClick:()=>{setScreen('survey');setSi(0);}},'Begin Survey →')
+    )
+  );
+
+  const section=sections[si];
+  const isLast=si===sections.length-1;
+  const pct=Math.round((si/sections.length)*100);
+  let qNum=1;
+  for(let x=0;x<si;x++)qNum+=sections[x].qs.length;
+
+  return e('div',{className:'app'},
+    e(Header),
+    e('div',{className:'pbwrap'},
+      e('div',{className:'pb'},e('div',{className:'pbfill',style:{width:pct+'%'}})),
+      e('div',{className:'plbl'},'Section '+(si+1)+' of '+sections.length)
+    ),
+    e('div',{className:'shdr'},
+      e('div',{className:'snum'},'Section '+section.num),
+      e('div',{className:'stxt'},section.title)
+    ),
+    section.qs.map((q,i)=>e(Question,{key:q.id,q,num:qNum+i,ans:answers[q.id],setAns})),
+    err&&e('div',{className:'errmsg'},err),
+    e('div',{className:'brow'},
+      si>0
+        ?e('button',{className:'btn btn-s',type:'button',onClick:()=>{setSi(s=>s-1);window.scrollTo(0,0);}},'← Back')
+        :e('button',{className:'btn btn-g',type:'button',onClick:()=>{setScreen('role');setSi(0);}},'← Change role'),
+      isLast
+        ?e('button',{className:'btn btn-p',type:'button',disabled:!complete()||submitting,onClick:submit},submitting?'Submitting...':'Submit Survey')
+        :e('button',{className:'btn btn-p',type:'button',disabled:!complete(),onClick:()=>{setSi(s=>s+1);window.scrollTo(0,0);}},'Next Section →')
+    )
+  );
+}
+
+ReactDOM.render(React.createElement(App),document.getElementById('root'));
+</script>
+</body>
+</html>
