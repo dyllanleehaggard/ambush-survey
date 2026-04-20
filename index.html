@@ -405,13 +405,13 @@ function App(){
     e('div',{className:'cfm'},
       e('div',{className:'cfmicon'},'✓'),
       e('div',{className:'cfmtitle'},'Survey Complete'),
-      e('p',{className:'cfmsub'},'Thank you for your time and your honesty. Your feedback has been submitted and will be reviewed by club leadership. We appreciate everything you brought to the 2025-26 season.')
+      e('p',{className:'cfmsub'},'Thank you for your time and your honesty. Your feedback has been submitted and will be reviewed. We appreciate everything you brought to the 2025-26 season.')
     )
   );
 
   if(screen==='role')return e('div',{className:'app'},
     e(Header),
-    e('p',{className:'intro'},'Thank you for being part of the 2025-26 St. Louis Ambush season. This survey is your opportunity to share honest, candid feedback that directly shapes how this club grows. Your responses are reviewed at every level of the organization. Providing your name is entirely optional.'),
+    e('p',{className:'intro'},'Thank you for being part of the 2025-26 St. Louis Ambush season. This survey is your opportunity to share honest, candid feedback that directly shapes how we grow. Providing your name is entirely optional.'),
     e('div',{className:'slbl'},'Select your role to begin'),
     e('div',{className:'rcards'},
       e('div',{className:'rcard'+(role==='player'?' sel':''),onClick:()=>setRole('player')},
